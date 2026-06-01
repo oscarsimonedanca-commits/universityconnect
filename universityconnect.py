@@ -195,9 +195,9 @@ elif pagina_selezionata == ":robot: Chatbot IA":
 
 
 #forse da togliere
-    documento_pdf = st.file_uploader(":file_folder: Carica un PDF:", type=["pdf"])
+   # documento_pdf = st.file_uploader(":file_folder: Carica un PDF:", type=["pdf"])
 
-    if documento_pdf is not None:
+    if documento is not None:
         @st.cache_data(show_spinner="Sto leggendo il PDF...")
         def estrai_testo_pdf(documento: str) -> str:
             with pdfplumber.open(documento) as pdf:
@@ -210,7 +210,7 @@ elif pagina_selezionata == ":robot: Chatbot IA":
                     # testo += pagina.extract_text() + "\n"
             return testo.strip()
         
-        testo = estrai_testo_pdf(documento_pdf)
+        testo = estrai_testo_pdf(documento)
 
         @st.cache_data(show_spinner=False)
         def crea_frammenti(testo: str):
