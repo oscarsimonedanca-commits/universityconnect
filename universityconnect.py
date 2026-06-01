@@ -185,9 +185,10 @@ elif pagina_selezionata == ":robot: Chatbot IA":
 
 # in base alla materia selezionata nel multiselect
     # facciamo corrispondere il nome del file nella cartella del progetto
-if sel_materia == ["Tecniche Avanzate"]:
+
+    if "Tecniche Avanzate" in sel_materia:
         documento = "tecniche_avanzate.pdf"
-    elif sel_materia == ["Semiotica"]:
+    elif "Semiotica" in sel_materia:
         documento = "semiotica.pdf"
     else:
         documento = "Costituzione_italiana.pdf"
