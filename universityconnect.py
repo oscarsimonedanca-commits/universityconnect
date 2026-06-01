@@ -179,38 +179,22 @@ elif pagina_selezionata == ":robot: Chatbot IA":
 #FILTRO SIDEBAR 
     st.sidebar.header("Seleziona i tuoi filtri:")
  
-    materia_selezionata = st.sidebar.multiselect("Seleziona la materia",
+    sel_materia = st.sidebar.multiselect("Seleziona la materia",
             options=["Tecniche Avanzate", "Semiotica", "Diritto"],
             default=["Tecniche Avanzate"]) # di default mostra la prima materia
 
-# dizionario che fa corrispondere ogni materia al nome del file su GitHub
-    # ⚠️ sostituisci TUO_USERNAME e TUO_REPO con i tuoi dati reali
-    mapping_materia = {
-        "Tecniche Avanzate": "tecniche_avanzate.pdf",
-        "Semiotica":         "semiotica.pdf",
-        "Diritto":           "costituzione_italiana.pdf"
-    }
- 
-    url_base = "https://raw.githubusercontent.com/TUO_USERNAME/TUO_REPO/main/" # url base del repo GitHub dove sono salvati i PDF
+# in base alla materia selezionata nel multiselect
+    # facciamo corrispondere il nome del file nella cartella del progetto
+    if sel_materia == ["Tecniche Avanzate"]:
+        documento = "tecniche_avanzate.pdf"
+    elif sel_materia == ["Semiotica"]:
+        documento = "semiotica.pdf"
+    else:
+        documento = "costituzione_italiana.pdf"
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#forse da togliere
     documento_pdf = st.file_uploader(":file_folder: Carica un PDF:", type=["pdf"])
 
     if documento_pdf is not None:
@@ -304,11 +288,3 @@ elif pagina_selezionata == ":robot: Chatbot IA":
         if domanda_utente:
                 risposta = catena.invoke(domanda_utente)
                 st.write(risposta)
-                    
-
-
-
-
-
-
- 
