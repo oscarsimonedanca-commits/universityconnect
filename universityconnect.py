@@ -185,14 +185,12 @@ elif pagina_selezionata == ":robot: Chatbot IA":
 
 # in base alla materia selezionata nel multiselect
     # facciamo corrispondere il nome del file nella cartella del progetto
-  
-
-if "Tecniche Avanzate" in sel_materia:
-    documento = "tecniche_avanzate.pdf"
-elif "Semiotica" in sel_materia:
-    documento = "semiotica.pdf"
-else:
-    documento = "Costituzione_italiana.pdf"
+if sel_materia == ["Tecniche Avanzate"]:
+        documento = "tecniche_avanzate.pdf"
+    elif sel_materia == ["Semiotica"]:
+        documento = "semiotica.pdf"
+    else:
+        documento = "Costituzione_italiana.pdf"
 
 #forse da togliere
    # documento_pdf = st.file_uploader(":file_folder: Carica un PDF:", type=["pdf"])
