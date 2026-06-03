@@ -101,9 +101,56 @@ if pagina_selezionata == ":bar_chart: Dashboard Risorse":
         st.subheader(f"Risorse disponibili ({len(dati_filtrati)} trovate)")
         st.dataframe(dati_filtrati)
 
-        
         st.markdown("---")
+        st.subheader(":arrow_down: Scarica Documento")
 
+        import requests
+
+        CORSI = [
+            "Comunicazione Pubblica, d'impresa e pubblicità",
+            "Comunicazione per l'enogastronomia",
+            "Comunicazione del patrimonio culturale",
+            "Archeologia",
+            "Cooperazione, sviluppo e migrazioni",
+            "Educazione al patrimonio archeologico e artistico",
+            "Religioni e culture",
+            "Scienze dell'antichità",
+            "Servizio sociale, diseguaglianze e vulnerabilità sociale",
+            "Storia dell'arte",
+            "Studi storici, antropologici e geografici"
+        ]
+
+        corso_download = st.selectbox(
+            ":mortar_board: Seleziona il Corso di Laurea:",
+            options=CORSI,
+            index=0
+        )
+
+        response = requests.get(
+            f"https://api.github.com/repos/oscarsimonedanca-commits/universityconnect/contents/documenti/{corso_download}"
+        )
+
+        st.markdown("**File disponibili:**")
+
+        if response.status_code == 200:
+            files = [f for f in response.json() if f["name"].endswith(".pdf")]
+            if files:
+                for file in files:
+                    file_response = requests.get(
+                        f"https://raw.githubusercontent.com/oscarsimonedanca-commits/universityconnect/main/documenti/{corso_download}/{file['name']}"
+                    )
+                    st.download_button(
+                        label=f":page_facing_up: {file['name']}",
+                        data=file_response.content,
+                        file_name=file["name"],
+                        mime="application/pdf",
+                        key=file["name"]
+                    )
+            else:
+                st.info(":pushpin: Nessun PDF disponibile per questo corso.")
+        else:
+            st.info(":pushpin: Nessun documento trovato per questo corso.")
+        
         st.subheader("Dettagli Risorse:")
         st.dataframe(dati_filtrati[["Titolo", "Download", "Rating"]], use_container_width=True)
 
@@ -176,59 +223,6 @@ if pagina_selezionata == ":bar_chart: Dashboard Risorse":
             yaxis_title_font_size=19)
 
         st.plotly_chart(dispersione, use_container_width=True)
-
-
-
-        st.markdown("---")
-        st.subheader(":arrow_down: Scarica Documento")
-
-        import requests
-
-        CORSI = [
-            "Comunicazione Pubblica, d'impresa e pubblicità",
-            "Comunicazione per l'enogastronomia",
-            "Comunicazione del patrimonio culturale",
-            "Archeologia",
-            "Cooperazione, sviluppo e migrazioni",
-            "Educazione al patrimonio archeologico e artistico",
-            "Religioni e culture",
-            "Scienze dell'antichità",
-            "Servizio sociale, diseguaglianze e vulnerabilità sociale",
-            "Storia dell'arte",
-            "Studi storici, antropologici e geografici"
-        ]
-
-        corso_download = st.selectbox(
-            ":mortar_board: Seleziona il Corso di Laurea:",
-            options=CORSI,
-            index=0
-        )
-
-        response = requests.get(
-            f"https://api.github.com/repos/oscarsimonedanca-commits/universityconnect/contents/documenti/{corso_download}"
-        )
-
-        st.markdown("**File disponibili:**")
-
-        if response.status_code == 200:
-            files = [f for f in response.json() if f["name"].endswith(".pdf")]
-            if files:
-                for file in files:
-                    file_response = requests.get(
-                        f"https://raw.githubusercontent.com/oscarsimonedanca-commits/universityconnect/main/documenti/{corso_download}/{file['name']}"
-                    )
-                    st.download_button(
-                        label=f":page_facing_up: {file['name']}",
-                        data=file_response.content,
-                        file_name=file["name"],
-                        mime="application/pdf",
-                        key=file["name"]
-                    )
-            else:
-                st.info(":pushpin: Nessun PDF disponibile per questo corso.")
-        else:
-            st.info(":pushpin: Nessun documento trovato per questo corso.")
-        
 
 
 elif pagina_selezionata == ":robot: Chatbot IA":
@@ -619,6 +613,8 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+
 
 
  
