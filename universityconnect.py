@@ -46,7 +46,7 @@ pagina_selezionata = st.sidebar.radio(
 )
 
 if pagina_selezionata == ":bar_chart: Dashboard Risorse":
-    st.header(":bar_chart: Dashboard - Risorse Universitarie")
+    st.header(":bar_chart: Archivio - Risorse Universitarie")
     
 
     dati = pd.read_excel("risorse_uniconnect.xlsx")
@@ -68,7 +68,7 @@ if pagina_selezionata == ":bar_chart: Dashboard Risorse":
                 options=dati["Corso"].unique(),
                 default=dati["Corso"].unique())
         
-        insegnamento_selezionato = st.sidebar.multiselect("Seleziona il insegnamento",
+        insegnamento_selezionato = st.sidebar.multiselect("Seleziona l'insegnamento",
                 options=dati["Insegnamento"].unique(),
                 default=dati["Insegnamento"].unique())
         
@@ -240,31 +240,55 @@ elif pagina_selezionata == ":robot: Chatbot IA":
     st.sidebar.header("Seleziona i tuoi filtri:")
  
     sel_materia = st.sidebar.multiselect("Seleziona la materia",
-            options=["Tecniche Avanzate per la Ricerca Sociale", "Semiotica", "Diritto"],
-            default=["Tecniche Avanzate per la Ricerca Sociale"]) # di default mostra la prima materia
+            options=[
+                "Tecniche Avanzate per la Ricerca Sociale",
+                "Semiotica",
+                "Semiotica 5",
+                "Marketing Digitale",
+                "Sociologia dei Fenomeni Politici",
+                "Laboratorio di Scienze Sociali Computazionali",
+                "Criminalità Organizzata"
+            ],
+            default=["Tecniche Avanzate per la Ricerca Sociale"])
 
 # in base alla materia selezionata nel multiselect
     # facciamo corrispondere il nome del file nella cartella del progetto
 
     if "Tecniche Avanzate per la Ricerca Sociale" in sel_materia:
-        documento = "tecniche_avanzate.pdf"
+        documento = "TECHINCHE AVANZATE PER LA RICERCA SOCIALE.pdf"
     elif "Semiotica" in sel_materia:
-        documento = "semiotica.pdf"
+        documento = "SEMIOTICA.pdf"
+    elif "Semiotica 5" in sel_materia:
+        documento = "SEMIOTICA 5.pdf"
+    elif "Marketing Digitale" in sel_materia:
+        documento = "MARKETING DIGITALE.pdf"
+    elif "Sociologia dei Fenomeni Politici" in sel_materia:
+        documento = "SOCIOLOGIA DEI FENOMENI POLITICI 6.pdf"
+    elif "Laboratorio di Scienze Sociali Computazionali" in sel_materia:
+        documento = "Laboratorio di scienze sociali computazionali.pdf"
     else:
-        documento = "Costituzione_italiana.pdf"
+        documento = "CRIMINALITÀ ORGANIZZATA 3.pdf"
 
 
-    if documento is not None:#cambiato in documento, prima era documento_pdf
+    if not sel_materia:
+        st.warning(":warning: Seleziona almeno una materia dalla barra laterale per usare il Chatbot!")
+    elif documento is not None:
+        import requests
+        import tempfile
+
         @st.cache_data(show_spinner="Sto leggendo il PDF...")
         def estrai_testo_pdf(documento: str) -> str:
-            with pdfplumber.open(documento) as pdf:
-                # st.write(f"Pagine totali: {len(pdf.pages)} - Comincio la scansione...")
+            url = f"https://raw.githubusercontent.com/oscarsimonedanca-commits/universityconnect/main/documenti/Comunicazione Pubblica, d'impresa e pubblicità/{documento}"
+            url = url.replace(" ", "%20").replace("'", "%27")
+            response = requests.get(url)
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+                tmp.write(response.content)
+                tmp_path = tmp.name
+            with pdfplumber.open(tmp_path) as pdf:
                 testo = ""
                 for pagina in pdf.pages:
-                    # Se la pagina è null menttiamo ""
                     testo_pagina = pagina.extract_text() or ""
                     testo = testo + testo_pagina + "\n"
-                    # testo += pagina.extract_text() + "\n"
             return testo.strip()
         
         testo = estrai_testo_pdf(documento) #cambiato in documento, prima era documento_pdf
@@ -384,11 +408,9 @@ elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
 
     stat_col1, stat_col2 = st.columns(2)
     with stat_col1:
-        st.metric(":arrow_down: I miei download ", p['download_miei'])
+        st.metric(":arrow_down: Download risorse ", p['download_miei'])
     with stat_col2:
         st.metric(":star: Rating Medio", f"{p['rating_medio']:.1f}")
-
-    st.markdown("---")
 
     st.markdown("---")
     st.subheader(":notebook: Libretto Universitario")
