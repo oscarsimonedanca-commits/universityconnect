@@ -79,6 +79,12 @@ if pagina_selezionata == ":bar_chart: Dashboard Risorse":
         dati_filtrati = dati.query(
                 "Corso == @corso_selezionato & Insegnamento == @insegnamento_selezionato & Tipo == @tipo_selezionato")
         
+        if not corso_selezionato or not insegnamento_selezionato or not tipo_selezionato:
+            st.warning(":warning: Seleziona almeno un'opzione per ogni filtro dalla barra laterale!")
+            st.stop()
+        elif dati_filtrati.empty:
+            st.warning(":warning: Nessuna risorsa corrisponde ai filtri selezionati.")
+            st.stop()
 
         download_totali = int(dati_filtrati["Download"].sum())
         rating_medio = round(dati_filtrati["Rating"].mean(), 1)
@@ -398,7 +404,7 @@ elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
     with prof_col2:
         st.markdown("""
         <div style='background-color:#FFD700; padding:15px; border-radius:10px; text-align:center;'>
-            <h3 style='color:#333; margin:0;'>⭐ Piano Pro</h3>
+            <h3 style='color:#333; margin:0;'>:star: Piano Pro</h3>
             <p style='color:#333; margin:5px 0 0 0; font-size:0.85em;'>Accesso completo</p>
         </div>
         """, unsafe_allow_html=True)
@@ -517,7 +523,7 @@ elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
             {"titolo": "Slide Tecniche Avanzate", "materia": "Tecniche Avanzate per la Ricerca Sociale", "tipo": "Slide", "data": "2024-07-15"},
         ]
 
-    # ── TABELLA RISORSE ─────────────────────────────────────
+    #TABELLA RISORSE
     if st.session_state.mie_risorse:
         df_risorse_studente = pd.DataFrame(st.session_state.mie_risorse)
         st.dataframe(df_risorse_studente.rename(columns={
@@ -529,7 +535,7 @@ elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
     else:
         st.info(":pushpin: Non hai ancora caricato nessuna risorsa.")
 
-    # ── AGGIUNGI RISORSA ────────────────────────────────────
+    #AGGIUNGI RISORSA 
     st.markdown("**:heavy_plus_sign: Aggiungi nuova risorsa:**")
     with st.form("form_risorsa"):
         ris_col1, ris_col2 = st.columns(2)
@@ -568,7 +574,7 @@ elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
                 st.balloons()
                 st.rerun()
 
-    # ── ELIMINA RISORSA ─────────────────────────────────────
+    #ELIMINA RISORSA
     if st.session_state.mie_risorse:
         st.markdown("**:wastebasket: Elimina risorsa:**")
         titoli_lista = [r["titolo"] for r in st.session_state.mie_risorse]
