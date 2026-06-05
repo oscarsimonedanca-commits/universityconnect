@@ -255,7 +255,7 @@ elif pagina_selezionata == ":robot: Chatbot IA":
                 "Laboratorio di Scienze Sociali Computazionali",
                 "Criminalità Organizzata"
             ],
-            default=["Tecniche Avanzate per la Ricerca Sociale"])
+            default=[])
     if st.session_state.get("ultima_materia") != sel_materia:
         st.session_state.ultima_materia = sel_materia
         st.session_state.ultima_risposta = ""
