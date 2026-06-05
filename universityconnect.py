@@ -339,6 +339,7 @@ elif pagina_selezionata == ":robot: Chatbot IA":
          '''Sei un assistente virtuale. 
     Usa prevalentemente il contesto fornito per rispondere alla domanda in modo conciso 
     e se necessario accedi a Internet per integrare le informazioni aggiuntive.
+    Quando attingi ad informazioni esterne al contesto fornito esplicitalo chiaramente.
     Se proprio non conosci la risposta, dì semplicemente 'Non sono in grado di rispondere'. 
     Contesto:\n{context}'''),
         ("human", "{question}")
@@ -404,7 +405,7 @@ elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
     with prof_col2:
         st.markdown("""
         <div style='background-color:#FFD700; padding:15px; border-radius:10px; text-align:center;'>
-            <h3 style='color:#333; margin:0;'> ⭐Piano Pro</h3>
+            <h3 style='color:#333; margin:0;'>:star: Piano Pro</h3>
             <p style='color:#333; margin:5px 0 0 0; font-size:0.85em;'>Accesso completo</p>
         </div>
         """, unsafe_allow_html=True)
