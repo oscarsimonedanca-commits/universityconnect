@@ -337,8 +337,9 @@ elif pagina_selezionata == ":robot: Chatbot IA":
         prompt = ChatPromptTemplate.from_messages([
         ("system", 
          '''Sei un assistente virtuale. 
-    Usa prevalentemente il contesto fornito per rispondere alla domanda in modo conciso.
-    Se il contesto inizia con "⚠️ Fonte esterna al PDF:", significa che le informazioni provengono da Internet e non dal PDF: in questo caso ricordati di segnalarlo chiaramente nella risposta.
+    Usa prevalentemente il contesto fornito per rispondere alla domanda in modo conciso 
+    e se necessario accedi a Internet per integrare le informazioni aggiuntive.
+    Quando attingi ad informazioni esterne al contesto fornito esplicitalo chiarament scrivendo che si tratta di una Fonte esterna ai contenuti del pdf.
     Se proprio non conosci la risposta, dì semplicemente 'Non sono in grado di rispondere'. 
     Contesto:\n{context}'''),
         ("human", "{question}")
