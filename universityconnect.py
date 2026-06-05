@@ -374,8 +374,20 @@ elif pagina_selezionata == ":robot: Chatbot IA":
         # e lo traforma in una stringa semplice (senza aggiunta di info ecc.)
     
         if domanda_utente:
-                risposta = catena.invoke(domanda_utente)
-                st.write(risposta)
+            docs = comparatore.get_relevant_documents(domanda_utente)
+            
+            if docs:
+                context = "\n\n".join([d.page_content for d in docs])
+                fonte_esterna = False
+            else:
+                context = ""
+                fonte_esterna = True
+
+            risposta = catena.invoke({"context": context, "question": domanda_utente})
+            
+            if fonte_esterna:
+                st.warning("⚠️ Fonte esterna al PDF")
+            st.write(risposta)
                     
 elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
     st.header(":bust_in_silhouette: Profilo Studente")
