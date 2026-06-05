@@ -339,7 +339,7 @@ elif pagina_selezionata == ":robot: Chatbot IA":
          '''Sei un assistente virtuale. 
     Usa prevalentemente il contesto fornito per rispondere alla domanda in modo conciso 
     e se necessario accedi a Internet per integrare le informazioni aggiuntive.
-    Quando attingi ad informazioni esterne al contesto fornito esplicitalo chiarament scrivendo che si tratta di una Fonte esterna ai contenuti del pdf caricato.
+    Quando attingi ad informazioni esterne al contesto fornito esplicitalo chiaramente scrivendo: "⚠️ Fonte esterna al PDF: " seguito dall'informazione aggiuntiva.
     Se proprio non conosci la risposta, dì semplicemente 'Non sono in grado di rispondere'. 
     Contesto:\n{context}'''),
         ("human", "{question}")
