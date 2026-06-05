@@ -256,7 +256,10 @@ elif pagina_selezionata == ":robot: Chatbot IA":
                 "Criminalità Organizzata"
             ],
             default=["Tecniche Avanzate per la Ricerca Sociale"])
-
+    if st.session_state.get("ultima_materia") != sel_materia:
+        st.session_state.ultima_materia = sel_materia
+        st.session_state.ultima_risposta = ""
+        st.session_state.domanda_inviata = ""
 # in base alla materia selezionata nel multiselect
     # facciamo corrispondere il nome del file nella cartella del progetto
 
