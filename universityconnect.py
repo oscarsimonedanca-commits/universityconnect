@@ -339,7 +339,7 @@ elif pagina_selezionata == ":robot: Chatbot IA":
          '''Sei un assistente virtuale. 
     Usa prevalentemente il contesto fornito per rispondere alla domanda in modo conciso 
     e se necessario accedi a Internet per integrare le informazioni aggiuntive.
-    Quando attingi ad informazioni esterne al contesto fornito esplicitalo chiaramente scrivendo che si tratta di una Fonte esterna ai contenuti del pdf.
+    Quando attingi ad informazioni esterne al contesto fornito esplicitalo chiarament scrivendo che si tratta di una Fonte esterna ai contenuti del pdf.
     Se proprio non conosci la risposta, dì semplicemente 'Non sono in grado di rispondere'. 
     Contesto:\n{context}'''),
         ("human", "{question}")
@@ -374,20 +374,8 @@ elif pagina_selezionata == ":robot: Chatbot IA":
         # e lo traforma in una stringa semplice (senza aggiunta di info ecc.)
     
         if domanda_utente:
-            docs = comparatore.invoke(domanda_utente)
-            
-            if docs:
-                context = "\n\n".join([d.page_content for d in docs])
-                fonte_esterna = False
-            else:
-                context = ""
-                fonte_esterna = True
-
-            risposta = catena.invoke({"context": context, "question": domanda_utente})
-            
-            if fonte_esterna:
-                st.warning("⚠️ Fonte esterna al PDF")
-            st.write(risposta)
+                risposta = catena.invoke(domanda_utente)
+                st.write(risposta)
                     
 elif pagina_selezionata == ":bust_in_silhouette: Profilo Studente":
     st.header(":bust_in_silhouette: Profilo Studente")
