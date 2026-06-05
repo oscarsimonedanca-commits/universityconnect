@@ -374,7 +374,7 @@ elif pagina_selezionata == ":robot: Chatbot IA":
         # e lo traforma in una stringa semplice (senza aggiunta di info ecc.)
     
         if domanda_utente:
-            docs = comparatore.get_relevant_documents(domanda_utente)
+            docs = comparatore.invoke(domanda_utente)
             
             if docs:
                 context = "\n\n".join([d.page_content for d in docs])
