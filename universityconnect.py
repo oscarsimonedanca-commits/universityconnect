@@ -640,7 +640,7 @@ st.markdown(
     """
     <div style='text-align: center; color: #666; font-size: 0.9em;'>
         <p>UniversityConnect © 2026 | Laboratorio di Scienze Sociali Computazionali</p>
-        <p>Made with :hearts: | <a href='#'>Privacy Policy</a> | <a href='#'>Contatti</a></p>
+        <p>Made with ❤️ | <a href='#'>Privacy Policy</a> | <a href='#'>Contatti</a></p>
     </div>
     """,
     unsafe_allow_html=True
